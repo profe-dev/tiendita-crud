@@ -22,7 +22,7 @@ namespace ProyectoTiendita
         //Definir método para la conexión
         private Conexion() 
         {
-            this.Base = "bd_almacen";
+            this.Base = "db_tiendita";
             this.Server = "localhost";
             this.Port = "3306";
             this.User = "root";

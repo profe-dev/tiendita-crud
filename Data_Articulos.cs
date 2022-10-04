@@ -55,5 +55,56 @@ namespace ProyectoTiendita
                 }
             }
         }
+
+        public string Guardar_ar(int nOpcion, Prop_Articulos oAr)
+        {
+            string Rpta = "";
+            string query = "";
+
+            MySqlConnection SqlCon = new MySqlConnection();
+
+            try
+            {
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                if (nOpcion == 1) //Nuevo Registro
+                {
+                    query = "insert into tb_articulos (descripcion_ar," +
+                        "marca_ar, " +
+                        "codigo_um, " +
+                        "codigo_ca, " +
+                        "stock_actual_ar, " +
+                        "fecha_crea, " +
+                        "fecha_modifica) " +
+                        "values ('"+oAr.Descripcion_ar+"', " +
+                        "'"+oAr.Marca_ar+"', " +
+                        "'"+oAr.Codigo_um+"', " +
+                        "'"+oAr.Codigo_ca+"', " +
+                        "'"+oAr.Stock_actual+"', " +
+                        "'"+oAr.Fecha_crea+"', " +
+                        "'"+oAr.Fecha_modifica+"')";
+                        
+                }
+                else //Actualizar Registro
+                {
+                
+                }
+                MySqlCommand Comando = new MySqlCommand(query, SqlCon);
+                SqlCon.Open();
+                Rpta = Comando.ExecuteNonQuery() >= 1 ? "OK" : "No se pudo ingresar el registro";
+            }
+            catch (Exception ex)
+            {
+
+                Rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                {
+                    SqlCon.Close();
+                }
+            }
+            return Rpta;
+        }
     }
 }
