@@ -222,6 +222,7 @@
             this.btn_actualizar.TabIndex = 15;
             this.btn_actualizar.Text = "Actualizar";
             this.btn_actualizar.UseVisualStyleBackColor = true;
+            this.btn_actualizar.Click += new System.EventHandler(this.btn_actualizar_Click);
             // 
             // btn_eliminar
             // 
@@ -233,6 +234,7 @@
             this.btn_eliminar.TabIndex = 16;
             this.btn_eliminar.Text = "Eliminar";
             this.btn_eliminar.UseVisualStyleBackColor = true;
+            this.btn_eliminar.Click += new System.EventHandler(this.btn_eliminar_Click);
             // 
             // btn_reporte
             // 
@@ -255,6 +257,7 @@
             this.btn_salir.TabIndex = 18;
             this.btn_salir.Text = "Salir";
             this.btn_salir.UseVisualStyleBackColor = true;
+            this.btn_salir.Click += new System.EventHandler(this.btn_salir_Click);
             // 
             // dgv_articulos
             // 
@@ -270,6 +273,7 @@
             this.dgv_articulos.RowTemplate.Height = 24;
             this.dgv_articulos.Size = new System.Drawing.Size(909, 242);
             this.dgv_articulos.TabIndex = 19;
+            this.dgv_articulos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_articulos_CellClick);
             // 
             // txt_buscar
             // 

@@ -88,6 +88,23 @@ namespace ProyectoTiendita
             txt_stock_actual.Text = "";
 ;        }
 
+        private void Selecciona_item()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(dgv_articulos.CurrentRow.Cells["codigo_ar"].Value)))
+            {
+                MessageBox.Show("Selecciona un registro válido", "Aviso del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                this.nCodigo_ar = Convert.ToInt32(dgv_articulos.CurrentRow.Cells["codigo_ar"].Value);
+                txt_descripcion.Text = Convert.ToString(dgv_articulos.CurrentRow.Cells["descripcion_ar"].Value);
+                txt_marca.Text = Convert.ToString(dgv_articulos.CurrentRow.Cells["marca_ar"].Value);
+                txt_umedida.Text = Convert.ToString(dgv_articulos.CurrentRow.Cells["codigo_um"].Value);
+                txt_categoria.Text = Convert.ToString(dgv_articulos.CurrentRow.Cells["codigo_ca"].Value);
+                txt_stock_actual.Text = Convert.ToString(dgv_articulos.CurrentRow.Cells["stock_actual_ar"].Value);
+            }
+        }
+
         #endregion
 
         private void Form1_Load(object sender, EventArgs e)
@@ -119,6 +136,7 @@ namespace ProyectoTiendita
             this.Estado_texto(false);
             this.Estado_botones_proceso(false);
             this.Estado_botones_principales(true);
+            nCodigo_ar = 0;
         }
 
         private void btn_guardar_Click(object sender, EventArgs e)
@@ -157,6 +175,49 @@ namespace ProyectoTiendita
             
 
 
+        }
+
+        private void btn_actualizar_Click(object sender, EventArgs e)
+        {
+            nEstado_guarda = 2; //Actualizar registro
+            this.Estado_texto(true);
+            this.Estado_botones_proceso(true); //Botones cancelar y guardar se visualizan
+            this.Estado_botones_principales(false); //Se desactivan los botones principales
+
+            txt_descripcion.Focus(); //Se envia el cursor al textbox descripcion_ar
+
+        }
+
+        private void dgv_articulos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.Selecciona_item();
+        }
+
+        private void btn_salir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btn_eliminar_Click(object sender, EventArgs e)
+        {
+            if (nCodigo_ar > 0 )
+            {
+                string Rpta = "";
+                Data_Articulos Datos = new Data_Articulos();
+                Rpta = Datos.Eliminar_ar(nCodigo_ar);
+
+                if (Rpta.Equals("OK"))
+                {
+                    this.Limpia_Texto();
+                    this.Listado_ar("%");
+                    nCodigo_ar = 0;
+                    MessageBox.Show("Registro eliminado correctamente", "Aviso del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else 
+                {
+                    MessageBox.Show("No tiene seleccionado ningún registro", "Aviso del Sistema", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
         }
     }
 }

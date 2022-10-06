@@ -86,7 +86,13 @@ namespace ProyectoTiendita
                 }
                 else //Actualizar Registro
                 {
-                
+                    query = "update tb_articulos set descripcion_ar= '" + oAr.Descripcion_ar + "'," +
+                                "marca_ar='" + oAr.Marca_ar + "'," +
+                                "codigo_um='" + oAr.Codigo_um + "'," +
+                                "codigo_ca='" + oAr.Codigo_ca + "'," +
+                                "stock_actual_ar='" + oAr.Stock_actual + "'," +
+                                "fecha_modifica='" + oAr.Fecha_modifica + "'" +
+                                " where codigo_ar='" + oAr.Codigo_ar + "'";
                 }
                 MySqlCommand Comando = new MySqlCommand(query, SqlCon);
                 SqlCon.Open();
@@ -105,6 +111,41 @@ namespace ProyectoTiendita
                 }
             }
             return Rpta;
+        }
+
+        public string Eliminar_ar(int nCodigo_ar)
+        {
+            string Rpta = "";
+            string query = "";
+
+            MySqlConnection SqlCon = new MySqlConnection();
+
+            try
+            {
+                SqlCon = Conexion.getInstancia().CrearConexion();
+                query = "delete from tb_articulos where codigo_ar='" + nCodigo_ar + "'";
+
+                MySqlCommand Comando = new MySqlCommand(query, SqlCon);
+                SqlCon.Open();
+
+                Rpta = Comando.ExecuteNonQuery() >= 1 ? "OK" : "No se pudo eliminar el registro";
+
+            }
+            catch (Exception ex)
+            {
+
+                Rpta = ex.Message;
+            }
+            finally
+            {
+                if (SqlCon.State == ConnectionState.Open)
+                {
+                    SqlCon.Close();
+                }
+            }
+
+            return Rpta;
+
         }
     }
 }
